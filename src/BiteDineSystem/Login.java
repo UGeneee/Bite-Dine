@@ -21,13 +21,14 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         setTitle("Bite & Dine");
         setIconImage(new ImageIcon(
-                getClass().getResource("/bite/dine/Resources/logo_icon.png")).getImage());;
+                getClass().getResource("/bite/dine/Resources/logo_icon.png")).getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(240, 237, 231));
 
         setFocusable(true);
         requestFocusInWindow();
         setResizable(false);
+        setLocationRelativeTo(null);
 
         loginPass.setText("Password");
         loginPass.setEchoChar((char) 0);
@@ -111,14 +112,14 @@ public class Login extends javax.swing.JFrame {
         jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/Bnd1.png"))); // NOI18N
-        jLayeredPane1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLayeredPane1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 580));
 
         getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
         // hard coded username access
         String user = "ADMIN";
         String pass = "123";
@@ -143,56 +144,60 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Welcome, " + user);
             Dashboard dashboard = new Dashboard();
             dashboard.setVisible(true);
-//            this.dispose();
+            this.dispose();
         }
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }// GEN-LAST:event_btnLoginActionPerformed
 
-    private void loginUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginUserFocusGained
+    private void loginUserFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginUserFocusGained
         // placeholder text
         if (loginUser.getText().equals("Username")) {
             loginUser.setText("");
             loginUser.setForeground(Color.WHITE);
         }
-    }//GEN-LAST:event_loginUserFocusGained
+    }// GEN-LAST:event_loginUserFocusGained
 
-    private void loginUserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginUserFocusLost
+    private void loginUserFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginUserFocusLost
         // placeholder text
         if (loginUser.getText().trim().isEmpty()) {
             loginUser.setText("Username");
             loginUser.setForeground(Color.WHITE);
         }
-    }//GEN-LAST:event_loginUserFocusLost
+    }// GEN-LAST:event_loginUserFocusLost
 
-    private void loginPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginPassFocusGained
+    private void loginPassFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginPassFocusGained
         // placeholder text
         if (new String(loginPass.getPassword()).equals("Password")) {
             loginPass.setText("");
             loginPass.setEchoChar('*');
             loginPass.setForeground(Color.WHITE);
         }
-    }//GEN-LAST:event_loginPassFocusGained
+    }// GEN-LAST:event_loginPassFocusGained
 
-    private void loginPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginPassFocusLost
+    private void loginPassFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginPassFocusLost
         // placeholder text
         if (loginPass.getPassword().length == 0) {
             loginPass.setEchoChar((char) 0);
             loginPass.setText("Password");
             loginPass.setForeground(Color.WHITE);
         }
-    }//GEN-LAST:event_loginPassFocusLost
+    }// GEN-LAST:event_loginPassFocusLost
 
-    private void loginUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginUserActionPerformed
+    private void loginUserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loginUserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loginUserActionPerformed
+    }// GEN-LAST:event_loginUserActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -210,7 +215,7 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
