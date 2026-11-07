@@ -7,6 +7,9 @@ package BiteDineSystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  *
@@ -79,11 +82,6 @@ public class Login extends javax.swing.JFrame {
                 loginUserFocusLost(evt);
             }
         });
-        loginUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginUserActionPerformed(evt);
-            }
-        });
         getContentPane().add(loginUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 263, 50));
 
         btnLogin.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -121,31 +119,60 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
         // hard coded username access
-        String user = "ADMIN";
-        String pass = "123";
+//        String user = "ADMIN";
+//        String pass = "onlyprogrammershouldhave";
+//        
+        // create multiple accounts in text file then read
+        //        FileWriter create
 
-        String inputUser = loginUser.getText().trim();
-        String inputPass = new String(loginPass.getPassword());
+//        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+//
+//        String inputUser = loginUser.getText().trim();
+//        String inputPass = new String(loginPass.getPassword());
+//
+//        if (inputUser.isEmpty() || inputUser.equals("Username")) {
+//            JOptionPane.showMessageDialog(this, "Please enter a username.");
+//        } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
+//            JOptionPane.showMessageDialog(this, "Please enter a password.");
+//        } else {
+//            // searches the username and password then logins
+//            try {
+//                File file = new File(path, "Accounts.txt");
+//                Scanner reader = new Scanner(file);
+//                boolean accountFound = false;
+//                
+//                while (reader.hasNextLine()) {
+//                    String line = reader.nextLine();
+//                    String[] account = line.split(",", -1);
+//                    
+//                    if (account.length != 2) {
+//                        continue;
+//                    }
+//                    
+//                    String savedUser = account[0];
+//                    String savedPass = account[1];
+//                    
+//                    if (inputUser.equals(savedUser) && inputPass.equals(savedPass)) {
+//                        accountFound = true;
+//                        break;
+//                    } 
+//                }
+//                
+//                if (accountFound) {
+//                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
+//                    Dashboard dashboard = new Dashboard();
+//                    dashboard.setVisible(true);
+//                    this.dispose();
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Invalid username or password.");
+//                    loginPass.setText("");
+//                }
+//
+//            } catch (FileNotFoundException e) {
+//                System.out.println("Error: File Not Found.");
+//            }
+//        }
 
-        if (inputUser.isEmpty() || inputUser.equals("Username")) {
-            JOptionPane.showMessageDialog(this, "Please enter a username.");
-        } else if (!inputUser.equals(user)) {
-            JOptionPane.showMessageDialog(this, "Invalid username.");
-            loginUser.setText("Username");
-            loginUser.setForeground(Color.WHITE);
-        } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
-            JOptionPane.showMessageDialog(this, "Please enter a password.");
-        } else if (!inputPass.equals(pass)) {
-            JOptionPane.showMessageDialog(this, "Invalid password.");
-            loginPass.setText("");
-            loginPass.setForeground(Color.WHITE);
-            loginPass.requestFocusInWindow();
-        } else {
-            JOptionPane.showMessageDialog(this, "Welcome, " + user);
-            Dashboard dashboard = new Dashboard();
-            dashboard.setVisible(true);
-            this.dispose();
-        }
     }// GEN-LAST:event_btnLoginActionPerformed
 
     private void loginUserFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginUserFocusGained
