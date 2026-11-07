@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,7 +43,16 @@ public class AccountCreation extends javax.swing.JFrame {
 
         loginUser.setForeground(Color.WHITE);
         loginUser.setBackground(new Color(157, 138, 124));
+
     }
+
+    // 
+    int min = 8;
+    int max = 12;
+
+    String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+
+    File file = new File(path, "Accounts.txt");
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +69,7 @@ public class AccountCreation extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnCreate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        btnBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(430, 333));
@@ -110,10 +121,20 @@ public class AccountCreation extends javax.swing.JFrame {
 
         btnDelete.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 100, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/back.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 40));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/back.png"))); // NOI18N
+        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBackMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -152,25 +173,23 @@ public class AccountCreation extends javax.swing.JFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // creating accounts
-        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
-
-        File file = new File(path, "Accounts.txt");
-
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());
 
         if (inputUser.isEmpty() || inputUser.equals("Username")) {
             JOptionPane.showMessageDialog(this, "Please enter a username.");
+        } else if (inputUser.length() < min || inputUser.length() > max) {
+            JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
         } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
             JOptionPane.showMessageDialog(this, "Please enter a password.");
+        } else if (inputPass.length() < min || inputPass.length() > max) {
+            JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
         } else {
 
             try {
                 FileWriter create = new FileWriter(file, true);
 
-                create.write("Username: " + inputUser + "\n");
-                create.write("Password: " + inputPass + "\n");
-                create.write("----------------------\n");
+                create.write(inputUser + "," + inputPass + ",STAFF\n");
 
                 create.close();
 
@@ -186,6 +205,78 @@ public class AccountCreation extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
+        int response = JOptionPane.showConfirmDialog(this, "Do you leave Account Creation?", "Leave?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            new Login().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnBackMouseClicked
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        ArrayList<String> accounts = new ArrayList<>();
+        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+
+        File file = new File(path, "Accounts.txt");
+
+        String inputUser = loginUser.getText().trim();
+        String inputPass = new String(loginPass.getPassword());
+        boolean isAdmin = false;
+
+        boolean accountFound = false;
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            // search and deletes
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] account = line.split(",", -1);
+
+                if (account.length != 3) {
+                    accounts.add(line);
+                    continue;
+                }
+
+                String savedUser = account[0].trim();
+                String savedPass = account[1].trim();
+                String savedRole = account[2].trim();
+
+                // if username and password match then go to line 252
+                if (savedUser.equalsIgnoreCase(inputUser) && savedPass.equalsIgnoreCase(inputPass)) {
+                    accountFound = true;
+                    if (savedRole.equalsIgnoreCase("ADMIN")) {
+                        isAdmin = true;
+                    }
+                    continue;
+                }
+                accounts.add(line);
+            }
+            reader.close();
+            if (accountFound && isAdmin) {
+                JOptionPane.showMessageDialog(this,
+                        "Admin account cannot be deleted.");
+                // deletes account
+            } else if (accountFound) {
+                int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete this account?", "Delete?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    FileWriter writer = new FileWriter(file);
+                    for (String account : accounts) {
+                        writer.write(account + "\n");
+                    }
+                    writer.close();
+                    JOptionPane.showMessageDialog(this, "Account deleted!");
+                    loginUser.setText("Username");
+                    loginPass.setText("Password");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Account not found.");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error accessing accounts file");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,11 +314,11 @@ public class AccountCreation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField loginPass;
     private javax.swing.JTextField loginUser;
     // End of variables declaration//GEN-END:variables

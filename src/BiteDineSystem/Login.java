@@ -118,60 +118,73 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
-        // hard coded username access
-//        String user = "ADMIN";
-//        String pass = "onlyprogrammershouldhave";
-//        
         // create multiple accounts in text file then read
         //        FileWriter create
 
-//        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
-//
-//        String inputUser = loginUser.getText().trim();
-//        String inputPass = new String(loginPass.getPassword());
-//
-//        if (inputUser.isEmpty() || inputUser.equals("Username")) {
-//            JOptionPane.showMessageDialog(this, "Please enter a username.");
-//        } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
-//            JOptionPane.showMessageDialog(this, "Please enter a password.");
-//        } else {
-//            // searches the username and password then logins
-//            try {
-//                File file = new File(path, "Accounts.txt");
-//                Scanner reader = new Scanner(file);
-//                boolean accountFound = false;
-//                
-//                while (reader.hasNextLine()) {
-//                    String line = reader.nextLine();
-//                    String[] account = line.split(",", -1);
-//                    
-//                    if (account.length != 2) {
-//                        continue;
-//                    }
-//                    
-//                    String savedUser = account[0];
-//                    String savedPass = account[1];
-//                    
-//                    if (inputUser.equals(savedUser) && inputPass.equals(savedPass)) {
-//                        accountFound = true;
-//                        break;
-//                    } 
-//                }
-//                
-//                if (accountFound) {
-//                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
-//                    Dashboard dashboard = new Dashboard();
-//                    dashboard.setVisible(true);
-//                    this.dispose();
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Invalid username or password.");
-//                    loginPass.setText("");
-//                }
-//
-//            } catch (FileNotFoundException e) {
-//                System.out.println("Error: File Not Found.");
-//            }
-//        }
+        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+
+        String inputUser = loginUser.getText().trim();
+        String inputPass = new String(loginPass.getPassword());
+
+        // checks username and password
+        if (inputUser.isEmpty() || inputUser.equals("Username")) {
+            JOptionPane.showMessageDialog(this, "Please enter a username.");
+        } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
+            JOptionPane.showMessageDialog(this, "Please enter a password.");
+        } else {
+            
+            try {
+                // reads accounts
+                File file = new File(path, "Accounts.txt");
+                Scanner reader = new Scanner(file);
+                boolean accountFound = false;
+                boolean isAdmin = false;
+
+                while (reader.hasNextLine()) {
+                    String line = reader.nextLine().trim();
+                    String[] account = line.split(",", -1);
+
+                    if (account.length != 3) {
+                        continue;
+                    }
+                    //checks format
+                    String savedUser = account[0].trim();
+                    String savedPass = account[1].trim();
+                    String savedRole = account[2].trim();
+
+                    if (inputUser.equals(savedUser) && inputPass.equals(savedPass)) {
+
+                        accountFound = true;
+
+                        if (savedRole.equals("ADMIN")) {
+                            isAdmin = true;
+                        }
+
+                        break;
+                    }
+                }
+
+                reader.close();
+
+                if (accountFound && isAdmin) {
+                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
+                    AccountCreation accC = new AccountCreation();
+                    accC.setVisible(true);
+                    this.dispose();
+                } else if (accountFound) {
+                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid username or password.");
+                    loginPass.setText("");
+                }
+
+            } catch (FileNotFoundException e) {
+                System.out.println("Error: File Not Found.");
+            }
+        }
 
     }// GEN-LAST:event_btnLoginActionPerformed
 
