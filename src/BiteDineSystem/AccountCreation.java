@@ -46,7 +46,7 @@ public class AccountCreation extends javax.swing.JFrame {
 
     }
 
-    // 
+    // default
     int min = 8;
     int max = 12;
 
