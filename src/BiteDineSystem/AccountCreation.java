@@ -178,12 +178,14 @@ public class AccountCreation extends javax.swing.JFrame {
 
         if (inputUser.isEmpty() || inputUser.equals("Username")) {
             JOptionPane.showMessageDialog(this, "Please enter a username.");
-        } else if (inputUser.length() < min || inputUser.length() > max) {
-            JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
+        } else if (inputUser.length() > max) {
+            JOptionPane.showMessageDialog(this, "Please enter a maximum of 12 characters only.");
+            loginUser.setText("Username");
         } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
             JOptionPane.showMessageDialog(this, "Please enter a password.");
         } else if (inputPass.length() < min || inputPass.length() > max) {
             JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
+            loginPass.setText("Password");
         } else {
 
             try {
@@ -259,14 +261,14 @@ public class AccountCreation extends javax.swing.JFrame {
                         "Admin account cannot be deleted.");
                 // deletes account
             } else if (accountFound) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete this account?", "Delete?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete this account?", "Account Found.", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (confirm == JOptionPane.YES_OPTION) {
                     FileWriter writer = new FileWriter(file);
                     for (String account : accounts) {
                         writer.write(account + "\n");
                     }
                     writer.close();
-                    JOptionPane.showMessageDialog(this, "Account deleted!");
+                    JOptionPane.showMessageDialog(this, "Account deleted.");
                     loginUser.setText("Username");
                     loginPass.setText("Password");
                 }
