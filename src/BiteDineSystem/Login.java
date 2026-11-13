@@ -84,7 +84,9 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(loginUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 263, 50));
 
+        btnLogin.setBackground(new java.awt.Color(77, 62, 47));
         btnLogin.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +123,7 @@ public class Login extends javax.swing.JFrame {
         // create multiple accounts in text file then read
         //        FileWriter create
 
-        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
 
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());

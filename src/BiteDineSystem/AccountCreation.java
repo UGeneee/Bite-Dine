@@ -50,7 +50,7 @@ public class AccountCreation extends javax.swing.JFrame {
     int min = 8;
     int max = 12;
 
-    String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+    String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
 
     File file = new File(path, "Accounts.txt");
 
