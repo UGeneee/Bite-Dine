@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package BiteDineSystem;
 
 import javax.swing.*;
@@ -14,6 +10,11 @@ import java.awt.event.*;
  */
 public class Dashboard extends javax.swing.JFrame {
 
+    private final String DASHBOARD = "DASHBOARD";
+    private final String ASSIGN_TABLE = "ASSIGN_TABLE";
+    private final String FLOOR_PLAN = "FLOOR_PLAN";
+    private final String GUEST_LIST = "GUEST_LIST";
+
     /**
      * Creates new form Dashboard
      */
@@ -24,6 +25,7 @@ public class Dashboard extends javax.swing.JFrame {
                 getClass().getResource("/bite/dine/Resources/logo_icon.png")).getImage());;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(240, 237, 231));
+        setSize(1078, 580);
 
         setFocusable(true);
         requestFocusInWindow();
@@ -39,10 +41,30 @@ public class Dashboard extends javax.swing.JFrame {
             button.setContentAreaFilled(false);
             button.setBackground(new Color(217, 201, 186));
         }
-        
+
+        contentPanel.setLayout(new CardLayout());
+
+        contentPanel.removeAll();
+
+        contentPanel.add(dashboardPanel, DASHBOARD);
+        contentPanel.add(floorPlanPanel, FLOOR_PLAN);
+        contentPanel.add(assignTablePanel, ASSIGN_TABLE);
+        contentPanel.add(guestListPanel, GUEST_LIST);
+
+        CardLayout c1 = (CardLayout) contentPanel.getLayout();
+        c1.show(contentPanel, DASHBOARD);
+
         btnDashboard.setOpaque(true);
         btnDashboard.setContentAreaFilled(true);
         btnDashboard.setBackground(new Color(77, 62, 47));
+
+        contentPanel.setBackground(new Color(240, 237, 231));
+        dashboardPanel.setBackground(new Color(240, 237, 231));
+        floorPlanPanel.setBackground(new Color(240, 237, 231));
+        guestListPanel.setBackground(new Color(240, 237, 231));
+        assignTablePanel.setBackground(new Color(240, 237, 231));
+
+        createAssignTableUI();
     }
 
     /**
@@ -64,6 +86,8 @@ public class Dashboard extends javax.swing.JFrame {
         btnAssignTable = new javax.swing.JButton();
         btnGuestList = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
+        contentPanel = new javax.swing.JPanel();
+        dashboardPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -74,6 +98,11 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        assignTablePanel = new javax.swing.JPanel();
+        floorPlanPanel = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        guestListPanel = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1078, 580));
@@ -161,10 +190,12 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnAssignTable, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnGuestList, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(30, 30, 30))
         );
+
+        contentPanel.setLayout(new java.awt.CardLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Overview of restaurant table status.");
@@ -260,18 +291,16 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dashboardPanelLayout = new javax.swing.GroupLayout(dashboardPanel);
+        dashboardPanel.setLayout(dashboardPanelLayout);
+        dashboardPanelLayout.setHorizontalGroup(
+            dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                    .addGroup(dashboardPanelLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,25 +308,98 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dashboardPanelLayout.setVerticalGroup(
+            dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(dashboardPanelLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1)))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(33, 33, 33)
+                .addGroup(dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
+        );
+
+        contentPanel.add(dashboardPanel, "card2");
+
+        javax.swing.GroupLayout assignTablePanelLayout = new javax.swing.GroupLayout(assignTablePanel);
+        assignTablePanel.setLayout(assignTablePanelLayout);
+        assignTablePanelLayout.setHorizontalGroup(
+            assignTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 825, Short.MAX_VALUE)
+        );
+        assignTablePanelLayout.setVerticalGroup(
+            assignTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 580, Short.MAX_VALUE)
+        );
+
+        contentPanel.add(assignTablePanel, "card3");
+
+        jLabel8.setFont(new java.awt.Font("Ubuntu Sans Mono", 0, 48)); // NOI18N
+        jLabel8.setText("This is Floor Plan");
+
+        javax.swing.GroupLayout floorPlanPanelLayout = new javax.swing.GroupLayout(floorPlanPanel);
+        floorPlanPanel.setLayout(floorPlanPanelLayout);
+        floorPlanPanelLayout.setHorizontalGroup(
+            floorPlanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(floorPlanPanelLayout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(jLabel8)
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+        floorPlanPanelLayout.setVerticalGroup(
+            floorPlanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(floorPlanPanelLayout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(jLabel8)
+                .addContainerGap(303, Short.MAX_VALUE))
+        );
+
+        contentPanel.add(floorPlanPanel, "card4");
+
+        jLabel9.setFont(new java.awt.Font("Ubuntu Sans Mono", 0, 48)); // NOI18N
+        jLabel9.setText("This is Guest List");
+
+        javax.swing.GroupLayout guestListPanelLayout = new javax.swing.GroupLayout(guestListPanel);
+        guestListPanel.setLayout(guestListPanelLayout);
+        guestListPanelLayout.setHorizontalGroup(
+            guestListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(guestListPanelLayout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(jLabel9)
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+        guestListPanelLayout.setVerticalGroup(
+            guestListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(guestListPanelLayout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(jLabel9)
+                .addContainerGap(303, Short.MAX_VALUE))
+        );
+
+        contentPanel.add(guestListPanel, "card5");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -305,6 +407,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         setActiveButton(btnDashboard);
+        switchPanel(DASHBOARD);
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -318,14 +421,17 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnFloorPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFloorPlanActionPerformed
         setActiveButton(btnFloorPlan);
+        switchPanel(FLOOR_PLAN);
     }//GEN-LAST:event_btnFloorPlanActionPerformed
 
     private void btnAssignTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignTableActionPerformed
         setActiveButton(btnAssignTable);
+        switchPanel(ASSIGN_TABLE);
     }//GEN-LAST:event_btnAssignTableActionPerformed
 
     private void btnGuestListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuestListActionPerformed
         setActiveButton(btnGuestList);
+        switchPanel(GUEST_LIST);
     }//GEN-LAST:event_btnGuestListActionPerformed
 
     private void setActiveButton(JButton activeButton) {
@@ -345,7 +451,47 @@ public class Dashboard extends javax.swing.JFrame {
         activeButton.setBorderPainted(false);
         activeButton.setFocusPainted(false);
     }
-    
+
+    private void switchPanel(String panelName) {
+        CardLayout c1 = (CardLayout) contentPanel.getLayout();
+        c1.show(contentPanel, panelName);
+    }
+
+    private void createAssignTableUI() {
+
+        // Use absolute positioning for now
+        assignTablePanel.setLayout(null);
+
+        // Assign Table Title
+        JLabel AStitle = new JLabel("Assign Table");
+        AStitle.setBounds(20, 15, 400, 40);
+        AStitle.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        AStitle.setForeground(new Color(66, 48, 33));
+        assignTablePanel.add(AStitle);
+
+        // Assign Table Subtitle
+        JLabel ASsubtitle = new JLabel("Assign tables to guests");
+        ASsubtitle.setBounds(20, 55, 400, 25);
+        ASsubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ASsubtitle.setForeground(new Color(115, 115, 115));
+        assignTablePanel.add(ASsubtitle);
+
+        // Guest Label
+        JLabel guestLabel = new JLabel("Select Guests");
+        guestLabel.setBounds(20, 110, 200, 25);
+        guestLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        guestLabel.setForeground(new Color(66, 48, 33));
+        assignTablePanel.add(guestLabel);
+
+        // Guest Dropdown
+        JComboBox<String> guestDropdown = new JComboBox<>();
+        guestDropdown.addItem("Choose a guest");
+        guestDropdown.setBounds(20, 140, 680, 40);
+        guestDropdown.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        assignTablePanel.add(guestDropdown);
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -382,6 +528,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel assignTablePanel;
     private javax.swing.JButton btnAssignTable;
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnFloorPlan;
@@ -390,6 +537,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JPanel contentPanel;
+    private javax.swing.JPanel dashboardPanel;
+    private javax.swing.JPanel floorPlanPanel;
+    private javax.swing.JPanel guestListPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -397,6 +548,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

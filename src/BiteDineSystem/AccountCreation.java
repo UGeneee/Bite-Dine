@@ -218,7 +218,7 @@ public class AccountCreation extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         ArrayList<String> accounts = new ArrayList<>();
-        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\BiteDineSystem";
+        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
 
         File file = new File(path, "Accounts.txt");
 
