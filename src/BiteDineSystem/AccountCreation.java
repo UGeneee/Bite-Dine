@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Acer
  */
+
 public class AccountCreation extends javax.swing.JFrame {
 
     /**
@@ -44,15 +45,37 @@ public class AccountCreation extends javax.swing.JFrame {
         loginUser.setForeground(Color.WHITE);
         loginUser.setBackground(new Color(157, 138, 124));
 
+        loginConfirm.setText("Password");
+        loginConfirm.setEchoChar((char) 0);
+        loginConfirm.setForeground(Color.WHITE);
+        loginConfirm.setBackground(new Color(157, 138, 124));
+
+        try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Unable to access data.");
+        }
+
+        lockFile();
+
     }
 
     // default
     int min = 8;
     int max = 12;
 
-    String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
+    File file = FileManager.getAccountsFile();
 
-    File file = new File(path, "Accounts.txt");
+    private boolean unlockFile() {
+        return file.setWritable(true);
+    }
+
+    private void lockFile() {
+        if (file.exists()) {
+            file.setReadOnly();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,9 +93,12 @@ public class AccountCreation extends javax.swing.JFrame {
         btnCreate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnBack = new javax.swing.JLabel();
+        confirmPass = new javax.swing.JLabel();
+        loginConfirm = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(430, 333));
+        setMaximumSize(new java.awt.Dimension(430, 441));
+        setMinimumSize(new java.awt.Dimension(430, 441));
         setPreferredSize(new java.awt.Dimension(430, 333));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -117,7 +143,7 @@ public class AccountCreation extends javax.swing.JFrame {
                 btnCreateActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 100, -1));
+        getContentPane().add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 100, -1));
 
         btnDelete.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnDelete.setText("Delete");
@@ -126,7 +152,7 @@ public class AccountCreation extends javax.swing.JFrame {
                 btnDeleteActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 100, -1));
+        getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 100, -1));
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/back.png"))); // NOI18N
         btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,6 +161,23 @@ public class AccountCreation extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 40));
+
+        confirmPass.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        confirmPass.setText("Confirm Password");
+        getContentPane().add(confirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
+
+        loginConfirm.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        loginConfirm.setForeground(new java.awt.Color(153, 153, 153));
+        loginConfirm.setText("Password");
+        loginConfirm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                loginConfirmFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                loginConfirmFocusLost(evt);
+            }
+        });
+        getContentPane().add(loginConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 263, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -175,6 +218,7 @@ public class AccountCreation extends javax.swing.JFrame {
         // creating accounts
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());
+        String confirmPassword = new String(loginConfirm.getPassword());
 
         if (inputUser.isEmpty() || inputUser.equals("Username")) {
             JOptionPane.showMessageDialog(this, "Please enter a username.");
@@ -186,7 +230,17 @@ public class AccountCreation extends javax.swing.JFrame {
         } else if (inputPass.length() < min || inputPass.length() > max) {
             JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
             loginPass.setText("Password");
+        } else if (confirmPassword.isEmpty() || confirmPassword.equals("Password")) {
+            JOptionPane.showMessageDialog(this, "Please confirm the password.");
+        } else if (!inputPass.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            loginConfirm.setText("Password");
         } else {
+
+            if (!unlockFile()) {
+                JOptionPane.showMessageDialog(this, "Unable to access data.");
+                return;
+            }
 
             try {
                 FileWriter create = new FileWriter(file, true);
@@ -202,6 +256,8 @@ public class AccountCreation extends javax.swing.JFrame {
 
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Account Creation Failed.");
+            } finally {
+                lockFile();
             }
         }
 
@@ -209,7 +265,13 @@ public class AccountCreation extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
-        int response = JOptionPane.showConfirmDialog(this, "Do you leave Account Creation?", "Leave?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(
+                this,
+                "Do you leave Account Creation?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
         if (response == JOptionPane.YES_OPTION) {
             new Login().setVisible(true);
             this.dispose();
@@ -218,109 +280,187 @@ public class AccountCreation extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         ArrayList<String> accounts = new ArrayList<>();
-        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
-
-        File file = new File(path, "Accounts.txt");
 
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());
-        boolean isAdmin = false;
+        String confirmPassword = new String(loginConfirm.getPassword());
 
+        boolean isAdmin = false;
         boolean accountFound = false;
 
+        if (inputPass.isEmpty() || inputPass.equals("Password")) {
+            JOptionPane.showMessageDialog(this, "Please enter the account password.");
+            return;
+        }
+
+        if (confirmPassword.isEmpty() || confirmPassword.equals("Password")) {
+            JOptionPane.showMessageDialog(this, "Please confirm the account password.");
+            return;
+        }
+
+        if (!inputPass.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            return;
+        }
+
         try {
-            Scanner reader = new Scanner(file);
 
-            // search and deletes
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
-                String[] account = line.split(",", -1);
+            try (Scanner reader = new Scanner(file)) {
 
-                if (account.length != 3) {
-                    accounts.add(line);
-                    continue;
-                }
+                while (reader.hasNextLine()) {
 
-                String savedUser = account[0].trim();
-                String savedPass = account[1].trim();
-                String savedRole = account[2].trim();
+                    String line = reader.nextLine();
+                    String[] account = line.split(",", -1);
 
-                // if username and password match then go to line 252
-                if (savedUser.equalsIgnoreCase(inputUser) && savedPass.equalsIgnoreCase(inputPass)) {
-                    accountFound = true;
-                    if (savedRole.equalsIgnoreCase("ADMIN")) {
-                        isAdmin = true;
+                    if (account.length != 3) {
+                        accounts.add(line);
+                        continue;
                     }
-                    continue;
+
+                    String savedUser = account[0].trim();
+                    String savedPass = account[1].trim();
+                    String savedRole = account[2].trim();
+
+                    if (savedUser.equalsIgnoreCase(inputUser) && savedPass.equals(inputPass)) {
+                        accountFound = true;
+                        if (savedRole.equalsIgnoreCase("ADMIN")) {
+                            isAdmin = true;
+                        }
+                        continue;
+                    }
+                    accounts.add(line);
                 }
-                accounts.add(line);
             }
-            reader.close();
             if (accountFound && isAdmin) {
+
                 JOptionPane.showMessageDialog(this,
                         "Admin account cannot be deleted.");
-                // deletes account
-            } else if (accountFound) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete this account?", "Account Found.", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    FileWriter writer = new FileWriter(file);
-                    for (String account : accounts) {
-                        writer.write(account + "\n");
-                    }
-                    writer.close();
-                    JOptionPane.showMessageDialog(this, "Account deleted.");
-                    loginUser.setText("Username");
-                    loginPass.setText("Password");
+
+                return;
+
+            } else if (!accountFound) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Account not found.");
+
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this account?",
+                    "Confirm Account Deletion",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+            JOptionPane.showMessageDialog(
+                    this,
+                    """
+                    WARNING: This action cannot be undone.
+                    The selected account will be permanently deleted.
+                    """,
+                    "Final Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            String verification = JOptionPane.showInputDialog(
+                    this,
+                    "Type DELETE to permanently delete this account:",
+                    "Final Verification",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (verification == null || !verification.equals("DELETE")) {
+
+                JOptionPane.showMessageDialog(this, "Deletion cancelled. Account was not deleted.");
+                return;
+            }
+
+            if (!unlockFile()) {
+                JOptionPane.showMessageDialog(this, "Unable to access data.");
+                return;
+            }
+            
+            try (FileWriter writer = new FileWriter(file)) {
+                for (String account : accounts) {
+                    writer.write(account + "\n");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Account not found.");
+                JOptionPane.showMessageDialog(this, "Account successfully deleted.");
+                loginUser.setText("Username");
+                loginPass.setText("Password");
+                loginConfirm.setText("Password");
+            } finally {
+                lockFile();
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error accessing accounts file");
+            JOptionPane.showMessageDialog(this,
+                    "Error accessing accounts file.");
+
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void loginConfirmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginConfirmFocusGained
+        if (new String(loginConfirm.getPassword()).equals("Password")) {
+            loginConfirm.setText("");
+            loginConfirm.setEchoChar('*');
+            loginConfirm.setForeground(Color.WHITE);
+        }
+    }//GEN-LAST:event_loginConfirmFocusGained
+
+    private void loginConfirmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginConfirmFocusLost
+        if (loginConfirm.getPassword().length == 0) {
+            loginConfirm.setEchoChar((char) 0);
+            loginConfirm.setText("Password");
+            loginConfirm.setForeground(Color.WHITE);
+        }
+    }//GEN-LAST:event_loginConfirmFocusLost
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AccountCreation().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new AccountCreation().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JLabel confirmPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPasswordField loginConfirm;
     private javax.swing.JPasswordField loginPass;
     private javax.swing.JTextField loginUser;
     // End of variables declaration//GEN-END:variables

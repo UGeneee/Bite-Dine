@@ -121,10 +121,6 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
         // create multiple accounts in text file then read
-        //        FileWriter create
-
-        String path = "D:\\NetBeans\\bsit2\\EphraimBonifacio\\Bite & Dine\\src\\Data";
-
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());
 
@@ -137,7 +133,7 @@ public class Login extends javax.swing.JFrame {
             
             try {
                 // reads accounts
-                File file = new File(path, "Accounts.txt");
+                File file = FileManager.getAccountsFile();
                 Scanner reader = new Scanner(file);
                 boolean accountFound = false;
                 boolean isAdmin = false;
