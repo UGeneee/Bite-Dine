@@ -4,6 +4,7 @@
  */
 package BiteDineSystem;
 
+import Models.FileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -133,8 +134,7 @@ public class Login extends javax.swing.JFrame {
             
             try {
                 // reads accounts
-                File file = FileManager.getAccountsFile();
-                Scanner reader = new Scanner(file);
+                Scanner reader = new Scanner(FileManager.getAccountsFile());
                 boolean accountFound = false;
                 boolean isAdmin = false;
 
@@ -165,12 +165,10 @@ public class Login extends javax.swing.JFrame {
                 reader.close();
 
                 if (accountFound && isAdmin) {
-                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
                     AccountCreation accC = new AccountCreation();
                     accC.setVisible(true);
                     this.dispose();
                 } else if (accountFound) {
-                    JOptionPane.showMessageDialog(this, "Welcome, " + inputUser);
                     Dashboard dashboard = new Dashboard();
                     dashboard.setVisible(true);
                     this.dispose();

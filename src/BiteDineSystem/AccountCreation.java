@@ -4,6 +4,7 @@
  */
 package BiteDineSystem;
 
+import Models.FileManager;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,7 +19,6 @@ import javax.swing.JOptionPane;
  *
  * @author Acer
  */
-
 public class AccountCreation extends javax.swing.JFrame {
 
     /**
@@ -51,31 +51,19 @@ public class AccountCreation extends javax.swing.JFrame {
         loginConfirm.setBackground(new Color(157, 138, 124));
 
         try {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
+            FileManager.getAccountsFile().getParentFile().mkdirs();
+            FileManager.getAccountsFile().createNewFile();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Unable to access data.");
         }
 
-        lockFile();
+        FileManager.lockFile();
 
     }
 
     // default
     int min = 8;
     int max = 12;
-
-    File file = FileManager.getAccountsFile();
-
-    private boolean unlockFile() {
-        return file.setWritable(true);
-    }
-
-    private void lockFile() {
-        if (file.exists()) {
-            file.setReadOnly();
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -225,6 +213,8 @@ public class AccountCreation extends javax.swing.JFrame {
         } else if (inputUser.length() > max) {
             JOptionPane.showMessageDialog(this, "Please enter a maximum of 12 characters only.");
             loginUser.setText("Username");
+        } else if (inputUser.contains(" ")) {
+            JOptionPane.showMessageDialog(this, "Username must not contain spaces.");
         } else if (inputPass.isEmpty() || inputPass.equals("Password")) {
             JOptionPane.showMessageDialog(this, "Please enter a password.");
         } else if (inputPass.length() < min || inputPass.length() > max) {
@@ -237,13 +227,13 @@ public class AccountCreation extends javax.swing.JFrame {
             loginConfirm.setText("Password");
         } else {
 
-            if (!unlockFile()) {
+            if (!FileManager.unlockFile()) {
                 JOptionPane.showMessageDialog(this, "Unable to access data.");
                 return;
             }
 
             try {
-                FileWriter create = new FileWriter(file, true);
+                FileWriter create = new FileWriter(FileManager.getAccountsFile(), true);
 
                 create.write(inputUser + "," + inputPass + ",STAFF\n");
 
@@ -251,13 +241,14 @@ public class AccountCreation extends javax.swing.JFrame {
 
                 loginUser.setText("Username");
                 loginPass.setText("Password");
+                loginConfirm.setText("Password");
 
                 JOptionPane.showMessageDialog(this, "Account Created.");
 
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Account Creation Failed.");
             } finally {
-                lockFile();
+                FileManager.lockFile();
             }
         }
 
@@ -305,7 +296,7 @@ public class AccountCreation extends javax.swing.JFrame {
 
         try {
 
-            try (Scanner reader = new Scanner(file)) {
+            try (Scanner reader = new Scanner(FileManager.getAccountsFile())) {
 
                 while (reader.hasNextLine()) {
 
@@ -332,17 +323,11 @@ public class AccountCreation extends javax.swing.JFrame {
                 }
             }
             if (accountFound && isAdmin) {
-
-                JOptionPane.showMessageDialog(this,
-                        "Admin account cannot be deleted.");
-
+                JOptionPane.showMessageDialog(this, "Admin account cannot be deleted.");
                 return;
 
             } else if (!accountFound) {
-
-                JOptionPane.showMessageDialog(this,
-                        "Account not found.");
-
+                JOptionPane.showMessageDialog(this, "Account not found.");
                 return;
             }
             int confirm = JOptionPane.showConfirmDialog(
@@ -374,17 +359,17 @@ public class AccountCreation extends javax.swing.JFrame {
             );
 
             if (verification == null || !verification.equals("DELETE")) {
-
                 JOptionPane.showMessageDialog(this, "Deletion cancelled. Account was not deleted.");
                 return;
             }
 
-            if (!unlockFile()) {
+            FileManager.showFile();
+            if (!FileManager.unlockFile()) {
                 JOptionPane.showMessageDialog(this, "Unable to access data.");
                 return;
             }
-            
-            try (FileWriter writer = new FileWriter(file)) {
+
+            try (FileWriter writer = new FileWriter(FileManager.getAccountsFile())) {
                 for (String account : accounts) {
                     writer.write(account + "\n");
                 }
@@ -393,11 +378,11 @@ public class AccountCreation extends javax.swing.JFrame {
                 loginPass.setText("Password");
                 loginConfirm.setText("Password");
             } finally {
-                lockFile();
+                FileManager.lockFile();
+                FileManager.hideFile();
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error accessing accounts file.");
+            JOptionPane.showMessageDialog(this, "Error accessing accounts file.");
 
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -422,36 +407,36 @@ public class AccountCreation extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(AccountCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new AccountCreation().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AccountCreation().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBack;

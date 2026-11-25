@@ -1,4 +1,2 @@
-// Verdana 32 bold
-ADMIN,12345678,ADMIN
-Username231,Password123,STAFF
-1,1,STAFF
+1,1,ADMIN
+2,2,STAFF
