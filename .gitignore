@@ -1,2 +1,13 @@
-build.xml
-manifest.mf
+# NetBeans generated files
+/build/
+/dist/
+
+# NetBeans private settings
+/nbproject/private/
+
+# Compiled Java files
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
