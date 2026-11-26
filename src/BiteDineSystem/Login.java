@@ -64,8 +64,6 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
-        setMaximumSize(new java.awt.Dimension(875, 580));
-        setPreferredSize(new java.awt.Dimension(875, 580));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 48)); // NOI18N
