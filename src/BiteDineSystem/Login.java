@@ -69,8 +69,8 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 48)); // NOI18N
-        jLabel2.setText("Welcome Back");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, -1));
+        jLabel2.setText("Welcome");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, -1, -1));
 
         loginUser.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         loginUser.setForeground(new java.awt.Color(153, 153, 153));
@@ -120,7 +120,7 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
         // create multiple accounts in text file then read
         String inputUser = loginUser.getText().trim();
         String inputPass = new String(loginPass.getPassword());
@@ -182,49 +182,46 @@ public class Login extends javax.swing.JFrame {
             }
         }
 
-    }// GEN-LAST:event_btnLoginActionPerformed
+    }
 
-    private void loginUserFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginUserFocusGained
+    private void loginUserFocusGained(java.awt.event.FocusEvent evt) {
         // placeholder text
         if (loginUser.getText().equals("Username")) {
             loginUser.setText("");
             loginUser.setForeground(Color.WHITE);
         }
-    }// GEN-LAST:event_loginUserFocusGained
+    }
 
-    private void loginUserFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginUserFocusLost
+    private void loginUserFocusLost(java.awt.event.FocusEvent evt) {
         // placeholder text
         if (loginUser.getText().trim().isEmpty()) {
             loginUser.setText("Username");
             loginUser.setForeground(Color.WHITE);
         }
-    }// GEN-LAST:event_loginUserFocusLost
+    }
 
-    private void loginPassFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginPassFocusGained
+    private void loginPassFocusGained(java.awt.event.FocusEvent evt) {
         // placeholder text
         if (new String(loginPass.getPassword()).equals("Password")) {
             loginPass.setText("");
             loginPass.setEchoChar('*');
             loginPass.setForeground(Color.WHITE);
         }
-    }// GEN-LAST:event_loginPassFocusGained
+    }
 
-    private void loginPassFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_loginPassFocusLost
+    private void loginPassFocusLost(java.awt.event.FocusEvent evt) {
         // placeholder text
         if (loginPass.getPassword().length == 0) {
             loginPass.setEchoChar((char) 0);
             loginPass.setText("Password");
             loginPass.setForeground(Color.WHITE);
         }
-    }// GEN-LAST:event_loginPassFocusLost
+    }
 
-    private void loginUserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loginUserActionPerformed
+    private void loginUserActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }// GEN-LAST:event_loginUserActionPerformed
+    }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
