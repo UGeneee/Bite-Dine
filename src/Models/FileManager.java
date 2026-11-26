@@ -30,7 +30,7 @@ public class FileManager {
         try {
             Files.setAttribute(ACCOUNT_PATH, "dos:hidden", true);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: hideFile() in FileManager");
         }
     }
     
@@ -38,7 +38,7 @@ public class FileManager {
         try {
             Files.setAttribute(ACCOUNT_PATH, "dos:hidden", false);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: showFile() in FileManager");
         }
     }
 }
