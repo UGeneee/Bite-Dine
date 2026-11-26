@@ -7,4 +7,4 @@ This project is developed by a group of second-year Information Technology stude
 ## **About the Project**
 The system aims to provide a simple and convenient way for restaurant staff, particularly hosts and hostesses, to manage table availability, guest assignments, and restaurant seating.
 
-_**-UMB**_
+_**- UMB**_
