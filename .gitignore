@@ -1,6 +1,8 @@
 # NetBeans generated files
 /build/
 /dist/
+build.xml
+manifest.mf
 
 # NetBeans private settings
 /nbproject/private/
