@@ -41,4 +41,21 @@ public class FileManager {
             System.out.println("Error: showFile() in FileManager");
         }
     }
+    
+    public static void protectAccountsFile() {
+    if (file.exists()) {
+        file.setWritable(true);
+        file.setReadOnly();
+
+        try {
+            Files.setAttribute(
+                ACCOUNT_PATH,
+                "dos:hidden",
+                true
+            );
+        } catch (IOException e) {
+            System.out.println("Error: protectAccountFile() in FileManager");
+        }
+    }
+}
 }
