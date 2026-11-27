@@ -75,7 +75,7 @@ public class Dashboard extends javax.swing.JFrame {
         Timer timer = new Timer(0, e -> {
             LocalDateTime currentDateTime = LocalDateTime.now();
             lblDate.setText(currentDateTime.format(DateTimeFormatter.ofPattern("EEEE, MMM dd, yyyy")).toUpperCase());
-            lblTime.setText(currentDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a")).toUpperCase());
+            lblTime.setText(currentDateTime.format(DateTimeFormatter.ofPattern("hh:mm a")).toUpperCase());
             lblLocal.setText("Local Time".toUpperCase());
         });
         timer.start();
