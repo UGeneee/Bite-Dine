@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -59,6 +60,19 @@ public class AccountCreation extends javax.swing.JFrame {
 
         FileManager.lockFile();
 
+        JToggleButton[] togBtns = {btnShowPass, btnShowConPass};
+
+        for (JToggleButton btn : togBtns) {
+            btn.setOpaque(false);
+            btn.setContentAreaFilled(false);
+            btn.setBorderPainted(false);
+            btn.setFocusPainted(false);
+            btn.setSelected(false);
+            btn.setFocusable(false);
+        }
+
+        btnShowPass.setIcon(new ImageIcon(getClass().getResource("/bite/dine/Resources/hidden.png")));
+        btnShowConPass.setIcon(new ImageIcon(getClass().getResource("/bite/dine/Resources/hidden.png")));
     }
 
     // default
@@ -75,6 +89,8 @@ public class AccountCreation extends javax.swing.JFrame {
     private void initComponents() {
 
         loginUser = new javax.swing.JTextField();
+        btnShowConPass = new javax.swing.JToggleButton();
+        btnShowPass = new javax.swing.JToggleButton();
         loginPass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -102,6 +118,24 @@ public class AccountCreation extends javax.swing.JFrame {
             }
         });
         getContentPane().add(loginUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 263, 50));
+
+        btnShowConPass.setBackground(new java.awt.Color(40, 40, 40));
+        btnShowConPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/hidden.png"))); // NOI18N
+        btnShowConPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowConPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnShowConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, 50));
+
+        btnShowPass.setBackground(new java.awt.Color(40, 40, 40));
+        btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/hidden.png"))); // NOI18N
+        btnShowPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 50));
 
         loginPass.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         loginPass.setForeground(new java.awt.Color(153, 153, 153));
@@ -189,8 +223,13 @@ public class AccountCreation extends javax.swing.JFrame {
     private void loginPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginPassFocusGained
         if (new String(loginPass.getPassword()).equals("Password")) {
             loginPass.setText("");
-            loginPass.setEchoChar('*');
             loginPass.setForeground(Color.WHITE);
+
+            if (btnShowPass.isSelected()) {
+                loginPass.setEchoChar((char) 0);
+            } else {
+               loginPass.setEchoChar('*');
+            }
         }
     }//GEN-LAST:event_loginPassFocusGained
 
@@ -220,6 +259,7 @@ public class AccountCreation extends javax.swing.JFrame {
         } else if (inputPass.length() < min || inputPass.length() > max) {
             JOptionPane.showMessageDialog(this, "Please enter 8 - 12 characters only.");
             loginPass.setText("Password");
+            loginConfirm.setText("Password");
         } else if (confirmPassword.isEmpty() || confirmPassword.equals("Password")) {
             JOptionPane.showMessageDialog(this, "Please confirm the password.");
         } else if (!inputPass.equals(confirmPassword)) {
@@ -390,8 +430,13 @@ public class AccountCreation extends javax.swing.JFrame {
     private void loginConfirmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginConfirmFocusGained
         if (new String(loginConfirm.getPassword()).equals("Password")) {
             loginConfirm.setText("");
-            loginConfirm.setEchoChar('*');
             loginConfirm.setForeground(Color.WHITE);
+
+            if (btnShowConPass.isSelected()) {
+                loginConfirm.setEchoChar((char) 0);
+            } else {
+               loginConfirm.setEchoChar('*');
+            }
         }
     }//GEN-LAST:event_loginConfirmFocusGained
 
@@ -402,6 +447,38 @@ public class AccountCreation extends javax.swing.JFrame {
             loginConfirm.setForeground(Color.WHITE);
         }
     }//GEN-LAST:event_loginConfirmFocusLost
+
+    private void btnShowConPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowConPassActionPerformed
+        if (btnShowConPass.isSelected()) {
+            loginConfirm.setEchoChar((char) 0);
+
+            btnShowConPass.setIcon(new ImageIcon(
+                    getClass().getResource("/bite/dine/Resources/visible.png")
+            ));
+        } else {
+            loginConfirm.setEchoChar('*');
+
+            btnShowConPass.setIcon(new ImageIcon(
+                    getClass().getResource("/bite/dine/Resources/hidden.png")
+            ));
+        }
+    }//GEN-LAST:event_btnShowConPassActionPerformed
+
+    private void btnShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPassActionPerformed
+        if (btnShowPass.isSelected()) {
+            loginPass.setEchoChar((char) 0);
+
+            btnShowPass.setIcon(new ImageIcon(
+                    getClass().getResource("/bite/dine/Resources/visible.png")
+            ));
+        } else {
+            loginPass.setEchoChar('*');
+
+            btnShowPass.setIcon(new ImageIcon(
+                    getClass().getResource("/bite/dine/Resources/hidden.png")
+            ));
+        }
+    }//GEN-LAST:event_btnShowPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -442,6 +519,8 @@ public class AccountCreation extends javax.swing.JFrame {
     private javax.swing.JLabel btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JToggleButton btnShowConPass;
+    private javax.swing.JToggleButton btnShowPass;
     private javax.swing.JLabel confirmPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
