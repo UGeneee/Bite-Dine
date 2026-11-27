@@ -54,6 +54,8 @@ public class Login extends javax.swing.JFrame {
         btnShowPass.setFocusable(false);
 
         btnShowPass.setIcon(new ImageIcon(getClass().getResource("/bite/dine/Resources/hidden.png")));
+        
+        FileManager.protectAccountsFile();
     }
 
     /**
