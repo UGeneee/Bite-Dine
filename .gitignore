@@ -1,14 +1,17 @@
 # NetBeans generated files
 /build/
 /dist/
-build.xml
-manifest.mf
 
 # NetBeans private settings
 /nbproject/private/
 
 # Compiled Java files
 *.class
+
+# Other IDEs (recommended if teammates use IntelliJ/VS Code)
+.idea/
+*.iml
+.vscode/
 
 # OS files
 .DS_Store
