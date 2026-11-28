@@ -123,7 +123,6 @@ public class Dashboard extends javax.swing.JFrame {
         cleanNum = new javax.swing.JLabel();
         assignTablePanel = new javax.swing.JPanel();
         floorPlanPanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         guestListPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
 
@@ -461,24 +460,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         contentPanel.add(assignTablePanel, "card3");
 
-        jLabel8.setFont(new java.awt.Font("Ubuntu Sans Mono", 0, 48)); // NOI18N
-        jLabel8.setText("This is Floor Plan");
-
         javax.swing.GroupLayout floorPlanPanelLayout = new javax.swing.GroupLayout(floorPlanPanel);
         floorPlanPanel.setLayout(floorPlanPanelLayout);
         floorPlanPanelLayout.setHorizontalGroup(
             floorPlanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(floorPlanPanelLayout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(jLabel8)
-                .addContainerGap(117, Short.MAX_VALUE))
+            .addGap(0, 772, Short.MAX_VALUE)
         );
         floorPlanPanelLayout.setVerticalGroup(
             floorPlanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(floorPlanPanelLayout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(jLabel8)
-                .addContainerGap(303, Short.MAX_VALUE))
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
         contentPanel.add(floorPlanPanel, "card4");
@@ -576,6 +566,8 @@ public class Dashboard extends javax.swing.JFrame {
         c1.show(contentPanel, panelName);
     }
 
+    
+    // Reclynn
     private void createAssignTableUI() {
 
         // Use absolute positioning for now
@@ -611,6 +603,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     }
 
+    
+    // Jake
     private final Color FP_GREEN = new Color(79, 143, 63);    // Available
     private final Color FP_RED   = new Color(211, 70, 56);    // Occupied
     private final Color FP_BROWN = new Color(107, 79, 58);    // borders and buttons
@@ -839,7 +833,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
