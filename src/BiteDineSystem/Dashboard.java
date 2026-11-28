@@ -112,15 +112,19 @@ public class Dashboard extends javax.swing.JFrame {
         lblOccupied = new javax.swing.JPanel();
         lblOccuT = new javax.swing.JLabel();
         occuNum = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         lblAvail = new javax.swing.JPanel();
         lblAvailT = new javax.swing.JLabel();
         availNum = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         lblReserved = new javax.swing.JPanel();
         lblResT = new javax.swing.JLabel();
         resNum = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         lblCleaning = new javax.swing.JPanel();
         lblCleanT = new javax.swing.JLabel();
         cleanNum = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         assignTablePanel = new javax.swing.JPanel();
         floorPlanPanel = new javax.swing.JPanel();
         guestListPanel = new javax.swing.JPanel();
@@ -283,8 +287,12 @@ public class Dashboard extends javax.swing.JFrame {
         lblOccuT.setText("Occupied Tables");
 
         occuNum.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        occuNum.setForeground(new java.awt.Color(255, 255, 255));
         occuNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         occuNum.setText("0");
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/user.png"))); // NOI18N
 
         javax.swing.GroupLayout lblOccupiedLayout = new javax.swing.GroupLayout(lblOccupied);
         lblOccupied.setLayout(lblOccupiedLayout);
@@ -293,18 +301,21 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(lblOccupiedLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(lblOccupiedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblOccuT, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(occuNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(occuNum, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(lblOccuT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         lblOccupiedLayout.setVerticalGroup(
             lblOccupiedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lblOccupiedLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(occuNum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblOccuT)
-                .addGap(25, 25, 25))
+                .addGap(20, 20, 20))
         );
 
         lblAvail.setBackground(new java.awt.Color(78, 142, 62));
@@ -316,8 +327,12 @@ public class Dashboard extends javax.swing.JFrame {
         lblAvailT.setText("Available tables");
 
         availNum.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        availNum.setForeground(new java.awt.Color(255, 255, 255));
         availNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         availNum.setText("0");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/table.png"))); // NOI18N
 
         javax.swing.GroupLayout lblAvailLayout = new javax.swing.GroupLayout(lblAvail);
         lblAvail.setLayout(lblAvailLayout);
@@ -326,20 +341,23 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(lblAvailLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(lblAvailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(availNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(lblAvailLayout.createSequentialGroup()
                         .addComponent(lblAvailT, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(availNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         lblAvailLayout.setVerticalGroup(
             lblAvailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lblAvailLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(availNum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblAvailT)
-                .addGap(25, 25, 25))
+                .addGap(20, 20, 20))
         );
 
         lblReserved.setBackground(new java.awt.Color(142, 140, 137));
@@ -351,8 +369,12 @@ public class Dashboard extends javax.swing.JFrame {
         lblResT.setText("Reserved Tables");
 
         resNum.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        resNum.setForeground(new java.awt.Color(255, 255, 255));
         resNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         resNum.setText("0");
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/calendar.png"))); // NOI18N
 
         javax.swing.GroupLayout lblReservedLayout = new javax.swing.GroupLayout(lblReserved);
         lblReserved.setLayout(lblReservedLayout);
@@ -361,18 +383,21 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(lblReservedLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(lblReservedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblResT, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(resNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(resNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
         );
         lblReservedLayout.setVerticalGroup(
             lblReservedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lblReservedLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resNum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblResT)
-                .addGap(24, 24, 24))
+                .addGap(20, 20, 20))
         );
 
         lblCleaning.setBackground(new java.awt.Color(134, 92, 62));
@@ -384,8 +409,12 @@ public class Dashboard extends javax.swing.JFrame {
         lblCleanT.setText("Cleaning Tables");
 
         cleanNum.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        cleanNum.setForeground(new java.awt.Color(255, 255, 255));
         cleanNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cleanNum.setText("0");
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bite/dine/Resources/cleaning.png"))); // NOI18N
 
         javax.swing.GroupLayout lblCleaningLayout = new javax.swing.GroupLayout(lblCleaning);
         lblCleaning.setLayout(lblCleaningLayout);
@@ -395,17 +424,20 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(lblCleaningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCleanT, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(cleanNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cleanNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         lblCleaningLayout.setVerticalGroup(
             lblCleaningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lblCleaningLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cleanNum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCleanT)
-                .addGap(25, 25, 25))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout dashboardPanelLayout = new javax.swing.GroupLayout(dashboardPanel);
@@ -833,6 +865,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
