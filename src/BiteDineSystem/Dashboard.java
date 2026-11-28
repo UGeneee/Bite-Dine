@@ -72,6 +72,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblCleanT.setText("Cleaning Tables".toUpperCase());
 
         createAssignTableUI();
+        createFloorPlanUI();
         Timer timer = new Timer(0, e -> {
             LocalDateTime currentDateTime = LocalDateTime.now();
             lblDate.setText(currentDateTime.format(DateTimeFormatter.ofPattern("EEEE, MMM dd, yyyy")).toUpperCase());
@@ -610,6 +611,180 @@ public class Dashboard extends javax.swing.JFrame {
 
     }
 
+    private final Color FP_GREEN = new Color(79, 143, 63);    // Available
+    private final Color FP_RED   = new Color(211, 70, 56);    // Occupied
+    private final Color FP_BROWN = new Color(107, 79, 58);    // borders and buttons
+    private final Color FP_DARK  = new Color(66, 48, 33);     // titles
+    private final Color FP_CREAM = new Color(240, 237, 231);  // box background
+    private final Color FP_GRAY  = new Color(115, 115, 115);  // small text
+
+    // Kept as fields so the functions can use them later
+    private JPanel fpTables, fpDetails, fpAdd, fpRemove;
+    private JButton[] fpTableButtons;
+    private JLabel fpTableName, fpCapacity, fpStatus;
+    private JComboBox<String> fpCmbStatus, fpCmbRemove;
+    private JTextField fpTxtNumber, fpTxtCapacity;
+    private JButton fpBtnUpdate, fpBtnAdd, fpBtnRemove;
+
+    private void createFloorPlanUI() {
+
+        // Remove the old "This is Floor Plan" label, then use free positioning
+        floorPlanPanel.removeAll();
+        floorPlanPanel.setLayout(null);
+
+        // ---------- Title and subtitle ----------
+        floorPlanPanel.add(fpLabel("Floor Plan", 20, 15, 400, 40,
+                new Font("Segoe UI", Font.BOLD, 28), FP_DARK));
+        floorPlanPanel.add(fpLabel("Select a table to manage its status", 20, 55, 400, 25,
+                new Font("Segoe UI", Font.PLAIN, 14), FP_GRAY));
+
+        // ---------- Box 1 (top left): the table buttons ----------
+        fpTables = fpBox(20, 100, 350, 200);
+        fpTables.setLayout(new GridLayout(0, 2, 10, 10));   // 2 columns
+        fpTables.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(FP_BROWN, 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+        String[] ids = {"T01", "T02", "T05", "T06", "T09", "T10"};
+        boolean[] available = {true, false, true, false, false, true};
+        fpTableButtons = new JButton[ids.length];
+
+        for (int i = 0; i < ids.length; i++) {
+            JButton b = new JButton(ids[i]);
+            b.setBackground(available[i] ? FP_GREEN : FP_RED);
+            b.setForeground(Color.WHITE);
+            b.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            b.setFocusPainted(false);
+            fpTableButtons[i] = b;
+            fpTables.add(b);
+        }
+        floorPlanPanel.add(fpTables);
+
+        // ---------- Box 2 (bottom left): table details ----------
+        fpDetails = fpBox(20, 315, 350, 200);
+
+        fpTableName = fpLabel("Table 01", 20, 15, 200, 28,
+                new Font("Segoe UI", Font.BOLD, 16), FP_DARK);
+        fpCapacity = fpLabel("Capacity: 4", 20, 45, 200, 20,
+                new Font("Segoe UI", Font.PLAIN, 12), FP_GRAY);
+
+        // Green / red badge on the right
+        fpStatus = fpLabel("Available", 240, 15, 90, 28,
+                new Font("Segoe UI", Font.BOLD, 13), Color.WHITE);
+        fpStatus.setOpaque(true);
+        fpStatus.setBackground(FP_GREEN);
+        fpStatus.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel fpStatusTitle = fpLabel("Table Status", 20, 85, 200, 20,
+                new Font("Segoe UI", Font.BOLD, 13), FP_DARK);
+
+        fpCmbStatus = new JComboBox<>(new String[]{"Available", "Occupied"});
+        fpCmbStatus.setBounds(20, 110, 310, 32);
+        fpCmbStatus.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+        fpBtnUpdate = fpBrownButton("Update Table", 20, 155, 310, 32);
+
+        fpDetails.add(fpTableName);
+        fpDetails.add(fpCapacity);
+        fpDetails.add(fpStatus);
+        fpDetails.add(fpStatusTitle);
+        fpDetails.add(fpCmbStatus);
+        fpDetails.add(fpBtnUpdate);
+        floorPlanPanel.add(fpDetails);
+
+        // ---------- Box 3 (top right): add table ----------
+        fpAdd = fpBox(390, 100, 350, 200);
+
+        fpAdd.add(fpTitleBar("Add Table", 350));
+        fpAdd.add(fpLabel("Table Number *", 20, 50, 150, 20,
+                new Font("Segoe UI", Font.BOLD, 12), FP_DARK));
+        fpAdd.add(fpLabel("Capacity *", 200, 50, 100, 20,
+                new Font("Segoe UI", Font.BOLD, 12), FP_DARK));
+
+        fpTxtNumber = new JTextField();
+        fpTxtNumber.setBounds(20, 75, 150, 32);
+        fpTxtNumber.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        fpAdd.add(fpTxtNumber);
+
+        fpTxtCapacity = new JTextField();
+        fpTxtCapacity.setBounds(200, 75, 130, 32);
+        fpTxtCapacity.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        fpAdd.add(fpTxtCapacity);
+
+        fpBtnAdd = fpBrownButton("Add Table", 210, 150, 120, 32);
+        fpAdd.add(fpBtnAdd);
+        floorPlanPanel.add(fpAdd);
+
+        // ---------- Box 4 (bottom right): remove table ----------
+        fpRemove = fpBox(390, 315, 350, 200);
+
+        fpRemove.add(fpTitleBar("Remove Table", 350));
+        fpRemove.add(fpLabel("Select Table", 20, 50, 150, 20,
+                new Font("Segoe UI", Font.BOLD, 12), FP_DARK));
+
+        fpCmbRemove = new JComboBox<>();
+        for (String id : ids) {
+            fpCmbRemove.addItem("Table " + id.substring(1));   // "Table 01"
+        }
+        fpCmbRemove.setBounds(20, 75, 310, 32);
+        fpCmbRemove.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        fpRemove.add(fpCmbRemove);
+
+        // The html tags make the text wrap onto two lines
+        fpRemove.add(fpLabel(
+                "<html>This action will permanently remove the table from the system.</html>",
+                20, 115, 310, 36, new Font("Segoe UI", Font.PLAIN, 12), FP_RED));
+
+        fpBtnRemove = fpBrownButton("Remove", 230, 155, 100, 32);
+        fpRemove.add(fpBtnRemove);
+        floorPlanPanel.add(fpRemove);
+
+        floorPlanPanel.revalidate();
+        floorPlanPanel.repaint();
+    }
+
+    // ---------- Small helpers (they only build parts of the Floor Plan) ----------
+
+    // A cream box with a thin brown border and free positioning
+    private JPanel fpBox(int x, int y, int w, int h) {
+        JPanel p = new JPanel(null);
+        p.setBounds(x, y, w, h);
+        p.setBackground(FP_CREAM);
+        p.setBorder(BorderFactory.createLineBorder(FP_BROWN, 1));
+        return p;
+    }
+
+    // The brown bar at the top of a box
+    private JLabel fpTitleBar(String text, int boxWidth) {
+        JLabel l = new JLabel(text);
+        l.setBounds(1, 1, boxWidth - 2, 34);
+        l.setOpaque(true);
+        l.setBackground(FP_BROWN);
+        l.setForeground(Color.WHITE);
+        l.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        l.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        return l;
+    }
+
+    // A plain label with position, font and color
+    private JLabel fpLabel(String text, int x, int y, int w, int h, Font font, Color color) {
+        JLabel l = new JLabel(text);
+        l.setBounds(x, y, w, h);
+        l.setFont(font);
+        l.setForeground(color);
+        return l;
+    }
+
+    // A brown button with white text
+    private JButton fpBrownButton(String text, int x, int y, int w, int h) {
+        JButton b = new JButton(text);
+        b.setBounds(x, y, w, h);
+        b.setBackground(FP_BROWN);
+        b.setForeground(Color.WHITE);
+        b.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        b.setFocusPainted(false);
+        return b;
+    }
     /**
      * @param args the command line arguments
      */
